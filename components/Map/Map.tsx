@@ -1,6 +1,6 @@
 import "leaflet/dist/leaflet.css";
 
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 
 interface Props {
   details: {
@@ -8,6 +8,8 @@ interface Props {
     location: {
       region: string;
       timezone: string;
+      country: string;
+      city: string;
       lat: number;
       lng: number;
     };
@@ -21,7 +23,7 @@ function Map({ details }: Props) {
     <MapContainer
       key={`${details.location.lat}-${details.location.lng}`}
       center={[details.location.lat, details.location.lng]}
-      zoom={13}
+      zoom={15}
       scrollWheelZoom={true}
       className="w-[100%] h-[100%] m- z-10"
     >
@@ -29,6 +31,24 @@ function Map({ details }: Props) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+      <CircleMarker
+        center={[details.location.lat, details.location.lng]}
+        radius={10}
+        color="blue"
+        fillOpacity={0.8}
+      >
+        <Popup className="z-50">
+          <div>
+            <h2>{details.ip}</h2>
+            <p>
+              Region: {details.location.region}, {details.location.country}
+            </p>
+            <p>City: {details.location.city}</p>
+            <p>Timezone: {details.location.timezone}</p>
+            <p>ISP: {details.isp}</p>
+          </div>
+        </Popup>
+      </CircleMarker>
     </MapContainer>
   );
 }

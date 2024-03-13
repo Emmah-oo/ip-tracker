@@ -24,7 +24,14 @@ const getDetails = async (ip = "") => {
 const Home = () => {
   const [details, setDetails] = useState({
     ip: "",
-    location: { region: "", timezone: "", lat: 0, lng: 0 },
+    location: {
+      region: "",
+      country: "",
+      city: "",
+      timezone: "",
+      lat: 0,
+      lng: 0,
+    },
     isp: "",
   });
 
@@ -39,6 +46,8 @@ const Home = () => {
         location: {
           region: result.location.region,
           timezone: result.location.timezone,
+          country: result.location.country,
+          city: result.location.city,
           lat: parseFloat(result.location.lat),
           lng: parseFloat(result.location.lng),
         },
@@ -86,7 +95,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="flex flex-col items-center gap-3 w-[80%] py-10 m-auto relative bottom-[-30vh] z-50 bg-white rounded-2xl shadow-md">
+      <div className="flex flex-col items-center gap-3 w-[80%] py-10 m-auto relative bottom-[-30vh] z-40 bg-white rounded-2xl shadow-md">
         <div className="flex flex-col items-center">
           <h1 className="text-[10px] text-gray-400">IP ADDRESS</h1>
           <Suspense fallback={<Loading />}>
